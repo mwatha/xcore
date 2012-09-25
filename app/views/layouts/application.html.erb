@@ -33,10 +33,14 @@
           <!-- a class="brand" href="#">xcore</a -->
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
+              <% if session[:user_id].blank? %>
+                Login
+              <%else%>
+                Logged in as <a href="#" class="navbar-link">Username</a>
+              <%end%>
             </p>
             <ul class="nav">
-              <li><a class="brand" href="/">xcore</a></li>
+              <li class="brand-name"><a class="brand" href="/">xcore</a></li>
               <li class="active"><a href="/">Home</a></li>
               <li><a href="#about">Staff</a></li>
               <li><a href="#contact">Students</a></li>
