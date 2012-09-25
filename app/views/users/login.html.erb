@@ -1,0 +1,9 @@
+<%= form_tag "/users/login" do %>
+  <p>  
+     <%=text_field(:user, :username, :textCase => "lower",:placeholder => "username") %>
+  </p>  
+  <p>  
+     <%=password_field(:user, :password, :textCase => "lower",:placeholder => "password") %>
+  </p>  
+  <%= submit_tag "Save" ,:class => "btn" %>
+<% end %> 

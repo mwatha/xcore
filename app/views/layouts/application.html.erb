@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <%= stylesheet_link_tag "bootstrap" %>                                              
+  <%= stylesheet_link_tag "bootstrap.min" %>                                              
+  <%= stylesheet_link_tag "bootstrap-responsive" %>                                              
+  <%= stylesheet_link_tag "bootstrap-responsive.min" %>                                              
+  <%= stylesheet_link_tag "docs" %>                                               
+  <%= stylesheet_link_tag "prettify" %> 
+                                                                                
+  <%= javascript_include_tag "jquery" %>                                              
+  <%= javascript_include_tag "bootstrap-tab" %>                                   
+  <%= javascript_include_tag "bootstrap-dropdown" %>  
+
+
+  <title>Xcore</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+
+ <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <!-- a class="brand" href="#">xcore</a -->
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              Logged in as <a href="#" class="navbar-link">Username</a>
+            </p>
+            <ul class="nav">
+              <li><a class="brand" href="/">xcore</a></li>
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="#about">Staff</a></li>
+              <li><a href="#contact">Students</a></li>
+              <li><a href="#contact">Exams/Results</a></li>
+              <li><a href="#contact">Reports</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+        <%= yield %>
+
+    </div>
+
+
+  </body>
+</html>
+
