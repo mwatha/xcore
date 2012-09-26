@@ -1,5 +1,6 @@
 Xcore::Application.routes.draw do
   get "users/login"
+  post "users/login"
 
   get "home/index"
 

@@ -36,7 +36,7 @@
               <% if session[:user_id].blank? %>
                 Login
               <%else%>
-                Logged in as <a href="#" class="navbar-link">Username</a>
+                Logged in as <a href="#" class="navbar-link"><%=Users.current_user.username%></a>
               <%end%>
             </p>
             <ul class="nav">
@@ -46,6 +46,13 @@
               <li><a href="#contact">Students</a></li>
               <li><a href="#contact">Exams/Results</a></li>
               <li><a href="#contact">Reports</a></li>
+              <li class="dropdown" style="float:right;">                                  
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Settings<b class="caret"></b></a>
+                <ul class="dropdown-menu">                                                
+                  <li><a href="#">Account</a></li>                         
+                  <li><a href="/users/login">Logout</a></li>  
+                </ul>                                                                     
+              </li>
             </ul>
           </div>
         </div>
