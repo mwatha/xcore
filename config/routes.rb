@@ -1,4 +1,6 @@
 Xcore::Application.routes.draw do
+  get "students/view"
+
   get "users/login"
   post "users/login"
 
