@@ -86,7 +86,7 @@ EOF
       <td>#{student.try(:last_name)}</td>                                       
       <td>#{student.try(:gender)}</td>                                          
       <td>#{student.try(:birthdate)}</td>                                       
-      <td><a href="/students/show/#{student.try(:id)}">Show</a></td>                                                           
+      <td><a href="/students/show?id=#{student.try(:id)}">Show</a></td>                                                           
     </tr>                                                                       
 EOF
                                                                                 
