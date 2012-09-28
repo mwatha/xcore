@@ -1,16 +1,13 @@
 <style>
 
-  #buttons-box {                                                                    
-    background-color: #FFFFFF;                                                    
-    border: 1px solid #AAAAAA;                                                    
-    padding: 15px 5px 15px 5px;
-    border-width: 1px 0px 1px 0px;
-    text-align: center;
-  }   
- 
   .buttons {
     width: 400px !important;
   }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
 </style>
 
 
@@ -18,14 +15,15 @@
     Students
   </div>
 
-  <div id = "buttons-box">
-  
+  <div class="well sidebar-nav">
+
   <p>  
-    <input type ="button" class="btn buttons" value="Create" />
+    <%= link_to "Find", '/students/search', :class => 'btn buttons' %>
   </p>  
 
   <p>  
-    <input type ="button" class="btn buttons" value="Edit" />
+    <%= link_to "Create", '/students/new', :class => 'btn buttons' %>
   </p>  
 
-</div>
+  </div>
+

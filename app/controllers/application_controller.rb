@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       respond_to do |format|                                                      
         format.html { redirect_to :controller => 'users',:action => 'login' }    
       end
-    elsif session[:user_id]
+    elsif not session[:user_id].blank?
       Users.current_user = Users.where(:'id' => session[:user_id]).first
     end
   end

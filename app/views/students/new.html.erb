@@ -1,0 +1,115 @@
+<script>
+
+function submitForm() {
+  if(validateForm())
+    document.getElementsByTagName('form')[0].submit();
+
+
+}
+
+function validateForm(){                                                      
+    fname = document.getElementById('student_first_name');                    
+    lname = document.getElementById('student_last_name');                        
+    sex = document.getElementById('student_gender');               
+    dob = document.getElementById('student_dob');                           
+    mname = document.getElementById('student_middle_name');                          
+    race = document.getElementById('student_race');                             
+                                                                                
+    if(fname.value == '') {                                                     
+      alert("Please enter first name ...");                                   
+      return false;                                                             
+    }else if(lname.value == '') {                                   
+      alert("Please enter last name...");                                    
+      return false;                                                             
+    }else if(sex.value == 'Select sex') {                                         
+      alert("Please select sex ...");                        
+      return false;                                                             
+    }else if(dob.value == '') {                                                 
+      alert("Please enter birthdate ...");                                     
+      return false;                                                             
+    }
+  return true; 
+}
+
+
+</script>
+
+
+
+
+
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  .students-details {
+   width: 40%; 
+   position: relative;
+   left: 35%;
+   background-color: transparent;
+   margin-bottom: 50px;
+  }
+
+  .students-details th {
+  text-align: left;
+  font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Enter new student details
+  </div>
+
+  <div class="well sidebar-nav">
+
+
+ <!--form action="/students/create" method="post" id = "student" onSubmit="return validateForm();" -->
+ <%= form_tag :action => 'create', :method => :post  do %>
+
+  <table class="students-details">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:student, :first_name,:placeholder => "First name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:student, :middle_name,:placeholder => "Middle name") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:student, :last_name ,:placeholder => "Last name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>
+        <%= select_tag "student[gender]", options_for_select(["Select sex","Female", "Male"]),
+          :placeholder => "Sex" %>
+      </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:student, :dob ,:placeholder => "Birthdate") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:student, :race, :placeholder => "Student race") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>              
+        <input onclick="submitForm();" type="button" id="signup" class="btn signup_btn" value="Register" style="width:100%;" />
+      </td>                                                               
+    </tr>                                                                 
+  </tbody>                                                                
+ </table>
+
+<%end%>
+
+  </div>
+

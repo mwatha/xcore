@@ -2,6 +2,7 @@ class Users < ActiveRecord::Base
   cattr_accessor :current_user                                                  
                                                                                 
   belongs_to :people
+  has_many :user_roles, :class_name => "UserRoles",:foreign_key => :user_id
 
   before_save do |pass|
     self.password_hash = BCrypt::Password.create(self.password_hash)

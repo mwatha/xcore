@@ -1,0 +1,70 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  #search_results {
+    font-size: 11px;
+    width: 100% !important;
+  }
+
+</style>
+
+
+<script>
+
+
+
+</script>
+
+
+  <div id = "page-title">
+    Students
+    <div class="navbar-search pull-right" action="/products/search">
+      <input type="text" class="search-query" 
+        placeholder="Search" 
+        onkeyup = "search();"
+        name="search_string">
+    </div>
+  </div>
+
+  <div class="well sidebar-nav">
+
+
+  <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+  <thead>                                                                         
+  <tr id = 'table_head'>                                                          
+    <th id="th1" style="width:200px;">Student ID</th>                             
+    <th id="th2" style="width:200px;">First name</th>                             
+    <th id="th3" style="width:200px;">Middle name</th>                              
+    <th id="th3" style="width:200px;">Last name</th>                              
+    <th id="th4" style="width:85px;">Sex</th>                                     
+    <th id="th5" style="width:150px;">DOB</th>                                    
+    <th id="th6" style="width:150px;">Date registered</th>                        
+    <th id="th7" style="width:100px;">&nbsp;</th>                                 
+  </tr>                                                                           
+  </thead>                                                                        
+  <tbody>
+    <%(@students || []).each do |student| %>                                                                 
+    <tr>
+      <td><%=student.try(:id)%></td>
+      <td><%=student.try(:first_name)%></td>
+      <td><%=student.try(:middle_name)%></td>
+      <td><%=student.try(:last_name)%></td>
+      <td><%=student.try(:gender)%></td>
+      <td><%=student.try(:birthdate)%></td>
+      <td>&nbsp;</td>
+    </tr>                            
+    <%end%>                                         
+  </tbody>                                                                        
+  </table>         
+
+
+
+  </div>
+

@@ -22,6 +22,10 @@ ActiveRecord::Schema.define(:version => 20120925163817) do
   end
 
   create_table "people_attribute_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "creator"
+    t.boolean  "voided"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

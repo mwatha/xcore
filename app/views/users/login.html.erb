@@ -11,13 +11,6 @@
     padding-top: 15px;                                                            
   }  
 
-  #login-box {                                                                    
-    background-color: #FFFFFF;                                                    
-    border: 1px solid #AAAAAA;                                                    
-    padding: 15px 5px 15px 5px;
-    border-width: 1px 0px 1px 0px;
-  }   
-  
 </style>
 
 
@@ -27,7 +20,7 @@
     <%= image_tag("keys.png" ,:id => "keys")%>                                    
   </div>
 
-  <div id = "login-box">
+  <div class="well sidebar-nav">
   
   <p>  
      <%=text_field(:user, :username, :textCase => "lower",:placeholder => "username") %>
