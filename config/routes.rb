@@ -1,6 +1,7 @@
 Xcore::Application.routes.draw do
 
   get "students/view"
+  get "students/live_search"
   get "students/search"
   get "students/new"
   post "students/create"
