@@ -1,0 +1,87 @@
+<script>
+
+function submitForm() {
+  if(validateForm())
+    document.getElementsByTagName('form')[0].submit();
+
+
+}
+
+function validateForm(){                                                      
+    fname = document.getElementById('subject_name');                    
+    lname = document.getElementById('subject_description');                        
+                                                                                
+    if(fname.value == '') {                                                     
+      alert("Please enter subject name ...");                                   
+      return false;                                                             
+    }
+  return true; 
+}
+
+
+</script>
+
+
+
+
+
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  .students-details {
+   width: 40%; 
+   position: relative;
+   left: 35%;
+   background-color: transparent;
+   margin-bottom: 50px;
+  }
+
+  .students-details th {
+  text-align: left;
+  font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Enter new subject details
+  </div>
+
+  <div class="well sidebar-nav">
+
+ <%= form_tag :action => 'create', :method => :post  do %>
+
+  <table class="students-details">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:subject, :name,:placeholder => "Subject name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_area(:subject, :description,
+             :rows => 5,
+             :placeholder => "Subject description") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>              
+        <input onclick="submitForm();" type="button" id="signup" class="btn signup_btn" value="Create" style="width:100%;" />
+      </td>                                                               
+    </tr>                                                                 
+  </tbody>                                                                
+ </table>
+
+<%end%>
+
+  </div>
+

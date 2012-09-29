@@ -1,0 +1,87 @@
+<script>
+
+function submitForm() {
+  if(validateForm())
+    document.getElementsByTagName('form')[0].submit();
+
+
+}
+
+function validateForm(){                                                      
+    fname = document.getElementById('program_name');                    
+    lname = document.getElementById('program_description');                        
+                                                                                
+    if(fname.value == '') {                                                     
+      alert("Please enter program name ...");                                   
+      return false;                                                             
+    }
+  return true; 
+}
+
+
+</script>
+
+
+
+
+
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  .students-details {
+   width: 40%; 
+   position: relative;
+   left: 35%;
+   background-color: transparent;
+   margin-bottom: 50px;
+  }
+
+  .students-details th {
+  text-align: left;
+  font: 13px/20px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Enter new program details
+  </div>
+
+  <div class="well sidebar-nav">
+
+ <%= form_tag :action => 'create', :method => :post  do %>
+
+  <table class="students-details">                               
+  <tbody>                                                                 
+    <tr>                                                                  
+      <td>&nbsp;</td>                                                     
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_field(:program, :name,:placeholder => "Program name") %> </td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td><%=text_area(:program, :description,
+             :rows => 5,
+             :placeholder => "Program description") %></td>
+    </tr>                                                                 
+    <tr>                                                                  
+      <td>              
+        <input onclick="submitForm();" type="button" id="signup" class="btn signup_btn" value="Create" style="width:100%;" />
+      </td>                                                               
+    </tr>                                                                 
+  </tbody>                                                                
+ </table>
+
+<%end%>
+
+  </div>
+

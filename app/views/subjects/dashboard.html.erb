@@ -1,0 +1,29 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Students
+  </div>
+
+  <div class="well sidebar-nav">
+
+  <p>  
+    <%= link_to "Find subject(s)", '/subjects/show', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "Create a subject", '/subjects/new', :class => 'btn buttons' %>
+  </p>  
+
+  </div>
+

@@ -37,15 +37,15 @@
     text-align: left;
   }
 
-  .sidebar-nav {
-    padding-bottom: 25px;
+  .sidebar-nav {                                                                
+    padding-bottom: 25px;                                                       
   }
 </style>
 
 
 <script>
 
-function findStudents() {
+function findPrograms() {
   var search_str = document.getElementById('search_words').value;
 
   if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -64,7 +64,7 @@ function findStudents() {
         }                                                                       
       }                                                                         
     }                                                                           
-    xmlhttp.open("GET","/students/live_search?search_str="+search_str,true);           
+    xmlhttp.open("GET","/programs/live_search?search_str="+search_str,true);           
     xmlhttp.send();
 }
 
@@ -78,11 +78,11 @@ function dataT(){
 
 
   <div id = "page-title">
-    Students
-    <div class="navbar-search pull-right" action="/products/search">
+    Available subjects
+    <div class="navbar-search pull-right" action="#">
       <input type="text" class="search-query" 
         placeholder="Search" id = "search_words"
-        onkeyup = "findStudents();"
+        onkeyup = "findPrograms();"
         name="search_string">
     </div>
   </div>
@@ -99,30 +99,29 @@ function dataT(){
   <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
   <thead>                                                                         
   <tr id = 'table_head'>                                                          
-    <th id="th1" style="width:200px;">Student ID</th>                             
-    <th id="th2" style="width:200px;">First name</th>                             
-    <th id="th3" style="width:200px;">Middle name</th>                              
-    <th id="th3" style="width:200px;">Last name</th>                              
-    <th id="th4" style="width:85px;">Sex</th>                                     
-    <th id="th5" style="width:150px;">DOB</th>                                    
+    <th id="th1" style="width:200px;">Subject ID</th>                             
+    <th id="th2" style="width:200px;">Subject name</th>                             
+    <th id="th3" style="width:200px;">Date created</th>                              
     <th id="th7" style="width:100px;">&nbsp;</th>                                 
   </tr>                                                                           
   </thead>                                                                        
   <tbody id='results'>
-    <%(@students || []).each do |student| %>                                                                 
+    <%(@subjects || []).each do |subject| %>                                                                 
     <tr>
-      <td><%=student.try(:id)%></td>
-      <td><%=student.try(:first_name)%></td>
-      <td><%=student.try(:middle_name)%></td>
-      <td><%=student.try(:last_name)%></td>
-      <td><%=student.try(:gender)%></td>
-      <td><%=student.try(:birthdate)%></td>
-      <td><a href="/students/show?id=<%=student.try(:id)%>">Show</a></td>
+      <td><%=subject.try(:id)%></td>
+      <td><%=subject.try(:name)%></td>
+      <td><%=subject.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
+      <td><a href="/subject/details?id=<%=subject.try(:id)%>">Show</a></td>
     </tr>                            
-    <%end%>
+    <%end%>                                         
+    <%if @subjects.blank?%>     
+      <tr>
+        <td colspan="4" style="text-align:center;">No subjects created</td>
+      </tr>                                    
+    <%end%>                                         
   </tbody>                                                                        
   </table>         
-  
+
   </div>
 
 

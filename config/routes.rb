@@ -1,7 +1,18 @@
 Xcore::Application.routes.draw do
 
-  get "students/show"
+  get "subjects/create"
+  get "subjects/dashboard"
+  get "subjects/show"
+  get "subjects/new"
+  post "subjects/create"
 
+  get "programs/new"
+  post "programs/create"
+  get "programs/dashboard"
+  get "programs/show"
+  get "/programs/live_search"
+
+  get "students/show"
   get "students/view"
   get "students/live_search"
   get "students/search"

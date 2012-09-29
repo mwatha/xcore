@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925163817) do
+ActiveRecord::Schema.define(:version => 20120929083901) do
 
   create_table "people", :force => true do |t|
     t.date     "birthdate"
@@ -45,6 +45,45 @@ ActiveRecord::Schema.define(:version => 20120925163817) do
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
+    t.string   "creator"
+    t.boolean  "voided"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "programs", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "creator"
+    t.boolean  "voided"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_programs", :force => true do |t|
+    t.string   "people_id"
+    t.string   "program_id"
+    t.date     "date_enrolled"
+    t.date     "end_date"
+    t.string   "creator"
+    t.boolean  "voided"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_programs_subjects_relationships", :force => true do |t|
+    t.string   "people_id"
+    t.string   "program_id"
+    t.string   "subject_id"
+    t.string   "creator"
+    t.boolean  "voided"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "subjects", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
     t.string   "creator"
     t.boolean  "voided"
     t.datetime "created_at"

@@ -1,0 +1,29 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Program dashboard
+  </div>
+
+  <div class="well sidebar-nav">
+
+  <p>  
+    <%= link_to "Find program(s)", '/programs/show', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "Create a program", '/programs/new', :class => 'btn buttons' %>
+  </p>  
+
+  </div>
+
