@@ -1,5 +1,12 @@
 class StudentsController < ApplicationController
   
+  def show
+    @student = People.joins(:people_names,
+      :people_attributes).where(:'people.id' => params[:id]).select("people.id,
+        people_names.middle_name,people_names.last_name,people.gender,people.birthdate,
+        people_names.first_name,people.created_at").first rescue nil
+  end
+    
   def view
   end
   
