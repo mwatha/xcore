@@ -72,23 +72,21 @@ private networks are required. Along with Customized software and interface desi
   </div>
 
   <div id = "content-right">
-    <div id = "latest-outcomes">Latest outcomes</div>
+    <div id = "latest-outcomes">Latest stats</div>
       <p/>
       <ul>
         <li>
-          <a href="#">Total registered students</a>
-          (<%=(Date.today - 2.months).strftime("%d %b %Y")%>
-          &nbsp;to&nbsp;<%=Date.today.strftime("%d %b %Y")%>)
+          <a href="#">Total registered students</a>(<%=@total_registered_students%>)
           <p/>
           <p>Total registered number of students</p>
         </li><br />
         <li>
-          <a href="#">Available programs</a>&nbsp;(26)
+          <a href="#">Available programs</a>&nbsp;(<%=@total_available_programs%>)
           <p/>
           <p>Total number of available students' programs</p>
         </li><br />
         <li>
-          <a href="#">Total number of active staff members</a>&nbsp;(100)
+          <a href="#">Total number of active staff members</a>&nbsp;(<%=@total_available_staff%>)
           <p/>
           <p>Total number of available students' programs</p>
         </li><br />
