@@ -44,6 +44,11 @@ class ProgramsController < ApplicationController
     redirect_to :action => 'dashboard'
   end
 
+  def details
+    @program = Programs.find params[:id]
+    module_ids = ProgramsSubjectsRelationships.where(:'program_id' => @program.id).select(:subject_id)
+    @modules = Subjects.where("id IN(?)",module_ids.map(&:subject_id))
+  end
 
   protected
 

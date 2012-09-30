@@ -1,5 +1,9 @@
 Xcore::Application.routes.draw do
 
+  get "subjects/details"
+
+  get "programs/details"
+
   get "subjects/create"
   get "subjects/dashboard"
   get "subjects/show"

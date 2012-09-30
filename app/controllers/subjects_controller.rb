@@ -28,6 +28,11 @@ class SubjectsController < ApplicationController
     render :text => live_search_results(programs,selecting_modules) and return
   end
 
+  def details
+    @module = Subjects.find params[:id]
+  end
+
+
   protected
 
   def live_search_results(subjects,selecting_modules)                                             
@@ -47,7 +52,7 @@ EOF
                                                                             
     (subjects || []).each do |subject|                            
       unless selecting_modules              
-        td = "<td><a href='/programs/details?id=#{subject.try(:id)}'>Show</a></td>"
+        td = "<td><a href='/subjects/details?id=#{subject.try(:id)}'>Show</a></td>"
       else
         td = "<td><a href='#' onclick='addModule(#{subject.try(:id)})'>Select</a></td>"
       end

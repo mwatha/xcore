@@ -111,7 +111,7 @@ function dataT(){
       <td><%=subject.try(:id)%></td>
       <td><%=subject.try(:name)%></td>
       <td><%=subject.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
-      <td><a href="/subject/details?id=<%=subject.try(:id)%>">Show</a></td>
+      <td><a href="/subjects/details?id=<%=subject.try(:id)%>">Show</a></td>
     </tr>                            
     <%end%>                                         
     <%if @subjects.blank?%>     
