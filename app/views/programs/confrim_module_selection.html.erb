@@ -1,0 +1,119 @@
+<%=javascript_include_tag "prototype"%>                                         
+<%=javascript_include_tag "jquery_data_table" %>                                
+<%=javascript_include_tag "jquery.dataTables.min" %>                            
+                                                                                
+<%= stylesheet_link_tag "demo_table" %>                                         
+<%= stylesheet_link_tag "demo_table_jui" %>                                     
+<%= stylesheet_link_tag "demo_page" %>
+<script>
+  var selected_modules = [];
+
+</script>
+
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  #search_results {                                                             
+    font-size: 11px;                                                            
+    width: 100% !important;                                                     
+  }                                                                             
+                                                                                
+  #search_results_length {                                                      
+    left: -24px;                                                                
+    position: absolute;                                                         
+    top: -35px;                                                                 
+  }                                                                             
+                                                                                
+  #search_results_filter {                                                      
+    right: 3px;                                                                 
+    position: absolute;                                                         
+    top: -35px;                                                                 
+  }                                                                             
+                                                                                
+  .dataTables_info {                                                            
+    text-align: left;                                                           
+  }                                                                             
+                                                                                
+  .sidebar-nav {                                                                
+    padding-bottom: 25px;                                                       
+  }
+
+  .continue {                                                                   
+    bottom: 10px;                                                               
+    float: right;                                                               
+    position: relative;                                                         
+  }
+</style>
+
+
+  <div id = "page-title">
+    Selected modules for:&nbsp;<%=@program.name%>
+  </div>
+
+  <div class="well sidebar-nav">
+    <br />
+    <br />
+    <br />
+    <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+    <thead>                                                                       
+      <tr id = 'table_head'>                                                        
+        <th id="th1" style="width:200px;">Program ID</th>                           
+        <th id="th2" style="width:200px;">Program name</th>                         
+        <th id="th3" style="width:200px;">Date created</th>                         
+        <th id="th7" style="width:100px;">&nbsp;</th>
+      </tr>                                                                     
+    </thead>                                                                    
+    <tbody>  
+
+    <%(@modules || []).each do |m| %>                                        
+      <script>
+        selected_modules.push(<%=m.try(:id)%>);
+      </script>
+      <tr>                                                                        
+        <td><%=m.try(:id)%></td>                                            
+        <td><%=m.try(:name)%></td>                                            
+        <td><%=m.try(:created_at)%></td>             
+        <td><a href="#" onclick="removeModule(<%=m.try(:id)%>">Remove</a></td>                               
+      </tr>
+    <%end%>
+    </tbody>
+  </table>
+
+    <div class="continue">                                                      
+      <input type="button" class='btn' value="Done" onclick="submitSelection();" />
+    </div>
+
+
+  <%= form_tag :controller => 'programs',:action => 'create_program_modules_relationship', 
+        :method => :post  do %>
+    <input type="hidden" name="program_id" value="<%=@program.id%>">            
+    <input type="hidden" name="module_ids" value="" id="module_ids">            
+  <%end%>
+
+
+  </div>
+
+<script>                                                     
+
+  function submitSelection() {
+    document.getElementById('module_ids').value = selected_modules.join(',');
+    document.getElementsByTagName('form')[0].submit();
+  }
+  
+  function removeModule() {
+  }
+                 
+  function dataT(){                                                               
+    $('#search_results').dataTable();                                                  
+  }
+
+ dataT();                                                                      
+</script>

@@ -25,14 +25,34 @@ class ProgramsController < ApplicationController
     redirect_to :action => 'new'
   end
 
+  def confrim_module_selection
+    module_ids = params[:module_ids].split(',').uniq 
+
+    @program = Programs.find params[:program_id]
+    @modules = Subjects.where("id IN(?)",module_ids)
+  end
+
+  def create_program_modules_relationship
+    subject_ids = params[:module_ids].split(',')
+
+    (subject_ids || []).each do |subject_id|
+      ProgramsSubjectsRelationships.create(:program_id => params[:program_id], 
+        :subject_id => subject_id, 
+        :creator => Users.current_user.id, :voided => 0)
+    end
+    
+    redirect_to :action => 'dashboard'
+  end
+
+
   protected
 
   def live_search_results(programs,selecting_program)                   
       unless selecting_program                          
         caption = 'Show' 
-        url = 'details'
+        url = 'programs/details'
       else
-        url = 'select_subjects'
+        url = 'subjects/select_subjects'
         caption = 'Select' if selecting_program                          
       end
                                                                                 
@@ -56,7 +76,7 @@ EOF
         <td>#{program.try(:id)}</td>                                            
         <td>#{program.try(:name)}</td>                                          
         <td>#{program.try(:created_at)}</td>                                    
-        <td><a href="/programs/#{url}?id=#{program.try(:id)}">#{caption}</a></td>    
+        <td><a href="/#{url}?id=#{program.try(:id)}">#{caption}</a></td>    
       </tr>
 EOF
                                                                                 

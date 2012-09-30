@@ -40,10 +40,18 @@
   .sidebar-nav {                                                                
     padding-bottom: 25px;                                                       
   }
+
+  .continue {
+    bottom: 10px;
+    float: right;
+    position: relative;
+  }
 </style>
 
 
 <script>
+var selected_modules = [];
+var program = "<%=Programs.find(params[:id]).name%>";
 
 function findPrograms() {
   var search_str = document.getElementById('search_words').value;
@@ -64,7 +72,7 @@ function findPrograms() {
         }                                                                       
       }                                                                         
     }                                                                           
-    xmlhttp.open("GET","/programs/live_search?search_str="+search_str+"&selecting_program=true",true);           
+    xmlhttp.open("GET","/subjects/live_search?search_str="+search_str+"&selecting_modules=true",true);           
     xmlhttp.send();
 }
 
@@ -72,13 +80,20 @@ function dataT(){
  $('#search_results').dataTable();                                                  
 }
 
+function addModule(module_id) {
+  selected_modules.push(module_id);
+  alert("Added to: " + program);
+}
 
-
+function submitSelection() {
+  document.getElementById('module_ids').value = selected_modules.join(',');
+  document.getElementsByTagName('form')[0].submit();
+}
 </script>
 
 
   <div id = "page-title">
-    Select program
+    Select modules for&nbsp;<%=Programs.find(params[:id]).name%>&nbsp;program
     <div class="navbar-search pull-right" action="#">
       <input type="text" class="search-query" 
         placeholder="Search" id = "search_words"
@@ -99,33 +114,42 @@ function dataT(){
   <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
   <thead>                                                                         
   <tr id = 'table_head'>                                                          
-    <th id="th1" style="width:200px;">Program ID</th>                             
-    <th id="th2" style="width:200px;">Program name</th>                             
+    <th id="th1" style="width:200px;">Module ID</th>                             
+    <th id="th2" style="width:200px;">Module name</th>                             
     <th id="th3" style="width:200px;">Date created</th>                              
     <th id="th7" style="width:100px;">&nbsp;</th>                                 
   </tr>                                                                           
   </thead>                                                                        
   <tbody id='results'>
-    <%(@programs || []).each do |program| %>                                                                 
+    <%(@subjects || []).each do |subject| %>                                                                 
     <tr>
-      <td><%=program.try(:id)%></td>
-      <td><%=program.try(:name)%></td>
-      <td><%=program.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
-      <td><a href="/subjects/select_subjects?id=<%=program.try(:id)%>">Select</a></td>
+      <td><%=subject.try(:id)%></td>
+      <td><%=subject.try(:name)%></td>
+      <td><%=subject.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
+      <td><a href='#' onclick="addModule(<%=subject.try(:id)%>)">Select</a></td>
     </tr>                            
     <%end%>                                         
-    <%if @programs.blank?%>     
+    <%if @subjects.blank?%>     
       <tr>
-        <td colspan="4" style="text-align:center;">No programs created</td>
+        <td colspan="4" style="text-align:center;">No modules created</td>
       </tr>                                    
     <%end%>                                         
   </tbody>                                                                        
   </table>         
-
+  
+    <div class="continue">
+      <input type="button" class='btn' value="Continue" onclick="submitSelection();" />
+    </div>
   </div>
 
 
   </div>
+
+
+  <%= form_tag :controller => 'programs',:action => 'confrim_module_selection', :method => :post  do %>
+    <input type="hidden" name="program_id" value="<%=params[:id]%>"> 
+    <input type="hidden" name="module_ids" value="" id="module_ids">
+  <%end%>
 
 <script>
   dataT();
