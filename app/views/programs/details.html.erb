@@ -1,0 +1,123 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    font-size: 12px;
+  }
+
+  .demographics {
+    width: 99%;
+  }
+
+  .demographics td , th{
+    text-align: left;
+  }
+
+  #sub-content-view {
+    background-color: #FFFFDD;
+    height: auto;
+    border: 1px dotted #696969;
+  }
+
+  #sub-content-view hr {
+    border-style: dotted;
+    border-width: 1px;
+    margin-left: 12px;
+    margin-right: 12px; 
+    background-color: black;
+  }
+
+
+  .demographics {
+  margin-left: 10px;
+  margin-top: 10px;
+  font-family: Tahoma,Verdana,Arial;
+  font-size: 11px; 
+  width: 98%;
+  text-align: left;
+}
+
+.demographics th{
+  word-wrap: break-word;
+  vertical-align: top;
+  color: #404040;
+}
+
+.demographics td{
+  vertical-align: top;
+}
+
+.xool_information {                                                           
+  font-size: 11px;                                                              
+  margin-left: 12px;                                                            
+  margin-right: 12px;                                                           
+}
+</style>
+
+
+  <div id = "page-title">
+    <%=@program.name%>
+  </div>
+
+  <div class="well sidebar-nav">
+
+    <div id = "sub-content-view">
+
+    <table class = "demographics">
+      <tr>
+        <th>Name:&nbsp;</th>
+        <td>
+          <%= @program.name %>
+        </td>
+        <th>Date created:&nbsp;</th><td><%=@program.created_at.strftime('%d %B %Y')%></td>
+      </tr>
+        <th>ID number:&nbsp;</td><td><%=@program.id.to_s.rjust(5,'0')%></td>
+      </tr>
+    </table>
+
+    <hr />
+
+    <p class="xool_information"><strong>Program modules</strong></p>
+    <p class="xool_information">
+   
+    <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+    <thead>                                                                         
+    <tr id = 'table_head'>                                                          
+      <th id="th1" style="width:200px;">Module ID</th>                             
+      <th id="th2" style="width:200px;">Module name</th>                             
+      <th id="th3" style="width:200px;">Date created</th>                              
+      <th id="th7" style="width:100px;">&nbsp;</th>                                 
+    </tr>                                                                           
+    </thead>                                                                        
+    <tbody id='results'>
+      <%(@modules || []).each do |subject| %>                                                                 
+      <tr>
+        <td><%=subject.try(:id)%></td>
+        <td><%=subject.try(:name)%></td>
+        <td><%=subject.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
+        <td><a href="/subjects/details?id=<%=subject.try(:id)%>">Show</a></td>
+      </tr>                            
+      <%end%>                                         
+      <%if @modules.blank?%>     
+        <tr>
+          <td colspan="4" style="text-align:center;">No modules created</td>
+      </tr>                                    
+      <%end%>                                         
+    </tbody>                                                                        
+    </table>        
+
+    </p>
+
+
+  </div>
+
+
+
+
+
+
+  </div>
+
