@@ -3,11 +3,18 @@ class ProgramsController < ApplicationController
     @programs = Programs.where(:'voided' => 0)
   end
 
+  def select_program
+    @programs = Programs.where(:'voided' => 0)
+  end
+
   def live_search
     programs = Programs.where("(name LIKE '%#{params[:search_str]}%' 
       OR created_at LIKE '%#{params[:search_str]}%' 
       OR id LIKE '%#{params[:search_str]}%') AND voided = 0")
-    render :text => live_search_results(programs) and return
+
+    selecting_program = (params[:selecting_program] == 'true') rescue false
+
+    render :text => live_search_results(programs,selecting_program) and return
   end
 
   def create
@@ -20,7 +27,14 @@ class ProgramsController < ApplicationController
 
   protected
 
-  def live_search_results(programs)                                             
+  def live_search_results(programs,selecting_program)                   
+      unless selecting_program                          
+        caption = 'Show' 
+        url = 'details'
+      else
+        url = 'select_subjects'
+        caption = 'Select' if selecting_program                          
+      end
                                                                                 
       html=<<EOF                                                               
     <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
@@ -42,7 +56,7 @@ EOF
         <td>#{program.try(:id)}</td>                                            
         <td>#{program.try(:name)}</td>                                          
         <td>#{program.try(:created_at)}</td>                                    
-        <td><a href="/programs/details?id=#{program.try(:id)}">Show</a></td>    
+        <td><a href="/programs/#{url}?id=#{program.try(:id)}">#{caption}</a></td>    
       </tr>
 EOF
                                                                                 

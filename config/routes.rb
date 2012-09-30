@@ -1,9 +1,14 @@
 Xcore::Application.routes.draw do
 
+  get "programs/select_subjects"
+
+  get "programs/select_program"
+
   get "subjects/create"
   get "subjects/dashboard"
   get "subjects/show"
   get "subjects/new"
+  get "subjects/live_search"
   post "subjects/create"
 
   get "programs/new"
