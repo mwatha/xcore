@@ -66,7 +66,7 @@ class ProgramsController < ApplicationController
         :creator => Users.current_user.id, :voided => 0)
     end
     
-    redirect_to :controller => :students , :action => :view
+    redirect_to :controller => :students , :action => :show, :id => params[:student_id]
   end
 
   protected
