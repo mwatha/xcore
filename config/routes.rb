@@ -1,5 +1,9 @@
 Xcore::Application.routes.draw do
 
+  get "subjects/select_modules_to_enroll"
+
+  get "programs/select_program_to_enroll"
+
   get "subjects/details"
 
   get "programs/details"
@@ -21,6 +25,7 @@ Xcore::Application.routes.draw do
   post "programs/confrim_module_selection"
   post "programs/create_program_modules_relationship"
   get "programs/select_program"
+  post "programs/create_student_program_modules_relationship"
 
   get "students/show"
   get "students/view"

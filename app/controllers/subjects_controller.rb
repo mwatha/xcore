@@ -32,6 +32,11 @@ class SubjectsController < ApplicationController
     @module = Subjects.find params[:id]
   end
 
+  def select_modules_to_enroll
+    @program = Programs.find params[:program_id]                                        
+    module_ids = ProgramsSubjectsRelationships.where(:'program_id' => @program. id).select(:subject_id)
+    @modules = Subjects.where("id IN(?)",module_ids.map(&:subject_id))
+  end
 
   protected
 
