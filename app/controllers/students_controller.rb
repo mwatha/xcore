@@ -5,6 +5,13 @@ class StudentsController < ApplicationController
       :people_attributes).where(:'people.id' => params[:id]).select("people.id,
         people_names.middle_name,people_names.last_name,people.gender,people.birthdate,
         people_names.first_name,people.created_at").first rescue nil
+
+    @programs = {}
+    (StudentProgramsSubjectsRelationships.where(:'people_id' => @student.id) || []).each do |record|
+      program_name = Programs.find record.program_id
+      @programs[program_name.name] = [] if @programs[program_name.name].blank?
+      @programs[program_name.name] << Subjects.find(record.subject_id).name 
+    end
   end
     
   def view
