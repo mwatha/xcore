@@ -1,0 +1,132 @@
+<%=javascript_include_tag "prototype"%>                                         
+<%=javascript_include_tag "jquery_data_table" %>                                
+<%=javascript_include_tag "jquery.dataTables.min" %>                            
+                                                                                
+<%= stylesheet_link_tag "demo_table" %>                                         
+<%= stylesheet_link_tag "demo_table_jui" %>                                     
+<%= stylesheet_link_tag "demo_page" %>
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  #search_results {
+    font-size: 11px;
+    width: 100% !important;
+  }
+
+  #search_results_length {
+    left: -24px;
+    position: absolute;
+    top: -35px;
+  }
+
+  #search_results_filter {
+    right: 3px;
+    position: absolute;
+    top: -35px;
+  }
+
+  .dataTables_info {
+    text-align: left;
+  }
+
+  .sidebar-nav {                                                                
+    padding-bottom: 25px;                                                       
+  }
+</style>
+
+
+<script>
+
+function findPrograms() {
+  var search_str = document.getElementById('search_words').value;
+
+  if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();                                             
+    }else{// code for IE6, IE5                                                  
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");                           
+    }                                                                           
+    xmlhttp.onreadystatechange=function() {                                     
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {                       
+        var results = xmlhttp.responseText;                                     
+        if(results == 'undefined' || results == '' || results == '"not validate"') {                           
+          return;
+        }else{                                                                  
+          document.getElementById('results-cont').innerHTML = results;                                                           
+          dataT();
+        }                                                                       
+      }                                                                         
+    }                                                                           
+    xmlhttp.open("GET","/exams/live_search?search_str="+search_str+"&selecting_program=true",true);           
+    xmlhttp.send();
+}
+
+function dataT(){                                                               
+ $('#search_results').dataTable();                                                  
+}
+
+
+
+</script>
+
+
+  <div id = "page-title">
+    Select program
+    <div class="navbar-search pull-right" action="#">
+      <input type="text" class="search-query" 
+        placeholder="Search" id = "search_words"
+        onkeyup = "findPrograms();"
+        name="search_string">
+    </div>
+  </div>
+
+  <div class="well sidebar-nav">
+
+   <br />
+   <br />
+   <br />
+   <br />
+
+  <div id = "results-cont">
+
+  <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+  <thead>                                                                         
+  <tr id = 'table_head'>                                                          
+    <th id="th1" style="width:200px;">Program ID</th>                             
+    <th id="th2" style="width:200px;">Program name</th>                             
+    <th id="th3" style="width:200px;">Date created</th>                              
+    <th id="th7" style="width:100px;">&nbsp;</th>                                 
+  </tr>                                                                           
+  </thead>                                                                        
+  <tbody id='results'>
+    <%(@programs || []).each do |program| %>                                                                 
+    <tr>
+      <td><%=program.try(:id)%></td>
+      <td><%=program.try(:name)%></td>
+      <td><%=program.try(:created_at).strftime('%d %B %Y') rescue 'Unknown'%></td>
+      <td><a href="/exams/select_modules?id=<%=program.try(:id)%>">Select</a></td>
+    </tr>                            
+    <%end%>                                         
+    <%if @programs.blank?%>     
+      <tr>
+        <td colspan="4" style="text-align:center;">No programs created</td>
+      </tr>                                    
+    <%end%>                                         
+  </tbody>                                                                        
+  </table>         
+
+  </div>
+
+
+  </div>
+
+<script>
+  dataT();
+</script>

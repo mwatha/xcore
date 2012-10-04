@@ -1,5 +1,19 @@
 Xcore::Application.routes.draw do
 
+  get "exams/confirm_modules"
+
+  get "exams/select_modules"
+
+  get "exams/schedule_an_exam"
+
+  get "exams/dashboard"
+  get "exams/live_search"
+  post "exams/create_exam_schedule"
+  post "exams/confirm_modules"
+
+
+
+
   get "subjects/select_modules_to_enroll"
 
   get "programs/select_program_to_enroll"

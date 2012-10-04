@@ -1,0 +1,153 @@
+<%=javascript_include_tag "prototype"%>                                         
+<%=javascript_include_tag "jquery_data_table" %>                                
+<%=javascript_include_tag "jquery.dataTables.min" %>                            
+                                                                                
+<%= stylesheet_link_tag "demo_table" %>                                         
+<%= stylesheet_link_tag "demo_table_jui" %>                                     
+<%= stylesheet_link_tag "demo_page" %>
+<script>
+  var selected_modules = [];
+
+</script>
+
+
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  #search_results {                                                             
+    font-size: 11px;                                                            
+    width: 100% !important;                                                     
+  }                                                                             
+                                                                                
+  #search_results_length {                                                      
+    left: -24px;                                                                
+    position: absolute;                                                         
+    top: -35px;                                                                 
+  }                                                                             
+                                                                                
+  #search_results_filter {                                                      
+    right: 3px;                                                                 
+    position: absolute;                                                         
+    top: -35px;                                                                 
+  }                                                                             
+                                                                                
+  .dataTables_info {                                                            
+    text-align: left;                                                           
+  }                                                                             
+                                                                                
+  .sidebar-nav {                                                                
+    padding-bottom: 25px;                                                       
+  }
+
+  .continue {                                                                   
+    bottom: 10px;                                                               
+    float: right;                                                               
+    position: relative;                                                         
+  }
+
+  .duration { width: 100px; }
+
+  .dates { width: 100px; }
+</style>
+
+
+  <div id = "page-title">
+    Selected modules for:&nbsp;<%=@program.name%>
+  </div>
+
+  <div class="well sidebar-nav">
+    <br />
+    <br />
+    <br />
+    <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+    <thead>                                                                       
+      <tr id = 'table_head'>                                                        
+        <th id="th1" style="width:200px;">Program ID</th>                           
+        <th id="th2" style="width:200px;">Program name</th>                         
+        <th id="th3" style="width:200px;">Date</th>                         
+        <th id="th7" style="width:100px;">Duration</th>
+      </tr>                                                                     
+    </thead>                                                                    
+    <tbody>  
+
+    <%(@modules || []).each do |m| %>                                        
+      <script>
+        selected_modules.push(<%=m.try(:id)%>);
+      </script>
+      <tr>                                                                        
+        <td><%=m.try(:id)%></td>                                            
+        <td><%=m.try(:name)%></td>                                            
+        <td>
+            <input type="text" size="12" id="inputField<%=m.try(:id)%>" 
+            name="inputField<%=m.try(:id)%>" class ='dates' 
+            onmouseover="setDatePicker(this.id);"
+            placeholder = "dd-mm-YYYY" />
+        </td>
+        <%
+          duration = ["","One hour","Two hours","Three hours","Four hours"]
+        %>
+        <td><%= select_tag "time_#{m.try(:id)}", 
+            options_for_select(duration) ,:id => "time_#{m.try(:id)}",:class =>'duration' %>
+        </td>             
+      </tr>
+    <%end%>
+    </tbody>
+  </table>
+
+    <div class="continue">                                                      
+      <input type="button" class='btn' value="Create exam schedule" onclick="submitSelection();" />
+    </div>
+
+
+  <%= form_tag :action => 'create_exam_schedule', :method => :post  do %>
+    <input type="hidden" name="program_id" value="<%=@program.id%>">            
+    <input type="hidden" name="module_ids" value="" id="module_ids">            
+  <%end%>
+
+
+  </div>
+<%=javascript_include_tag "jsDatePick.min.1.3" %>                            
+<%= stylesheet_link_tag "jsDatePick_ltr.min" %>                                         
+
+<script>                                                     
+  var schedules = null;
+  function submitSelection() {
+    schedules = {}
+    <%(@modules || []).each do |m| %>
+      time = document.getElementById("time_<%=m.try(:id)%>").value; 
+      setDate = document.getElementById("inputField<%=m.try(:id)%>").value;
+      schedules["<%=m.try(:id)%>"] = [];
+      schedules["<%=m.try(:id)%>"].push(setDate);
+      schedules["<%=m.try(:id)%>"].push(time);
+    <%end%>
+    document.getElementById('module_ids').value = JSON.stringify(schedules);
+    document.getElementsByTagName('form')[0].submit();
+  }
+  
+  function removeModule() {
+  }
+                 
+  function dataT(){                                                               
+    $('#search_results').dataTable();                                                  
+  }
+
+ dataT();                                                                      
+
+
+function setDatePicker(id) {
+    new JsDatePick({
+      useMode:2,
+      target:id,
+      dateFormat:"%d-%M-%Y"
+    });
+}
+
+
+</script>

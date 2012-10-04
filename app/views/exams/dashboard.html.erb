@@ -1,0 +1,41 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+</style>
+
+
+  <div id = "page-title">
+    Exams dashboard
+  </div>
+
+  <div class="well sidebar-nav">
+
+  <p>  
+    <%= link_to "View time tables", '/exams/schedule', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "View results", '/exams/results', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "View past papers", '/exams/papers', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "Create exam schedule", '/exams/schedule_an_exam', :class => 'btn buttons' %>
+  </p>  
+
+  <p>  
+    <%= link_to "Upload/edit an exam paper", '/exams/papers', :class => 'btn buttons' %>
+  </p>  
+
+  </div>
+

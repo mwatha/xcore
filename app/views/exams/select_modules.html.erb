@@ -1,0 +1,84 @@
+<style>
+
+  .buttons {
+    width: 400px !important;
+  }
+
+  .sidebar-nav {
+    text-align: center;
+  }
+
+  .continue {
+    bottom: 10px;                                                               
+    float: right;                                                               
+    position: relative;
+  }
+</style>
+
+
+  <div id = "page-title">
+    Select modules for:
+  </div>
+
+  <div class="well sidebar-nav">
+
+  
+    <table id="search_results" class="table table-striped table-bordered table-condensed">                                                     
+    <thead>                                                                       
+      <tr id = 'table_head'>                                                        
+        <th id="th1" style="width:200px;">Module ID</th>                           
+        <th id="th2" style="width:200px;">Module name</th>                         
+        <th id="th3" style="width:200px;">Date created</th>                         
+        <th id="th7" style="width:100px;">&nbsp;</th>                               
+      </tr>                                                                     
+    </thead>                                                                    
+    <tbody>
+
+   <% (@modules || []).each do |subject| %>
+      <tr>                                                                        
+        <td><%=subject.try(:id)%></td>                                            
+        <td><%=subject.try(:name)%></td>                                          
+        <td><%=subject.try(:created_at)%></td>                                    
+        <td><input type="checkbox" id="check_box<%=subject.try(:id)%>" onclick="mark(<%=subject.try(:id)%>)"></td>                                    
+      </tr>
+ 
+    <%end%>
+ 
+  </tbody></table> 
+
+
+   <div class="continue">                                                      
+      <input type="button" class='btn' value="Continue" onclick="submitSelection();" />
+    </div>                                                                      
+                                                                                
+                                                                                
+  <%= form_tag :action => 'confirm_modules', :method => :post  do %>                                                 
+    <input type="hidden" name="program_id" value="<%=@program.id%>">            
+    <input type="hidden" name="module_ids" value="" id="module_ids">            
+  <%end%> 
+
+
+  </div>
+
+ <script>
+  var selected_modules = [];
+
+  function submitSelection() {                                                  
+    document.getElementById('module_ids').value = selected_modules.join(',');   
+    document.getElementsByTagName('form')[0].submit();                          
+  }
+
+  function mark(module_id) {
+    if (document.getElementById("check_box"+module_id).checked ) {
+      selected_modules.push(module_id);
+    }else{
+      new_array = selected_modules;
+      selected_modules = [];
+      for(var i=0; i < new_array.length; i++){
+        if(new_array[i] != module_id)
+          selected_modules.push(new_array[i]);
+
+      }
+    }
+  }
+</script>
