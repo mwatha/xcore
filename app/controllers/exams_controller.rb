@@ -35,15 +35,16 @@ class ExamsController < ApplicationController
   end
 
   def create_exam_schedule
-    raise JSON.parse(params[:module_ids]).to_yaml and return
-    subject_ids = params[:module_ids].split(',')
+    schedules =  JSON.parse(params[:module_ids])
 
-    (subject_ids || []).each do |subject_id|
-      ProgramsSubjectsRelationships.create(:program_id => params[:program_id], 
-        :subject_id => subject_id, 
-        :creator => Users.current_user.id, :voided => 0)
+    (schedules || {}).each do |subject_id,values|
+      start_date = "#{values[0].to_date} #{values[2]}:00".to_time
+      end_date = start_date + (values[1].to_i).hour
+      ExamSchedules.create(:program_id => params[:program_id], 
+        :subject_id => subject_id,:start_date => start_date,
+        :end_date => end_date,:creator => Users.current_user.id, :voided => 0)
     end
-    
+
     redirect_to :action => 'dashboard'
   end
 
@@ -53,8 +54,11 @@ class ExamsController < ApplicationController
     @modules = Subjects.where("id IN(?)",module_ids.map(&:subject_id))
   end
 
-  def select_program_to_enroll
-    @programs = Programs.where(:'voided' => 0)
+  def schedule
+    @schedules = ExamSchedules.joins("INNER JOIN programs p 
+      ON p.id = exam_schedules.program_id INNER JOIN subjects s 
+      ON s.id=exam_schedules.subject_id").select("exam_schedules.id schedule_id,
+      p.name program_name,s.name module_name,start_date,end_date")
   end
 
   protected

@@ -10,7 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120930103634) do
+ActiveRecord::Schema.define(:version => 20121005055917) do
+
+  create_table "exam_schedules", :force => true do |t|
+    t.string   "program_id"
+    t.string   "subject_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "creator"
+    t.boolean  "voided"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exams", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "people", :force => true do |t|
     t.date     "birthdate"

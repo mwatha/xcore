@@ -1,5 +1,7 @@
 Xcore::Application.routes.draw do
 
+  get "exams/schedule"
+
   get "exams/confirm_modules"
 
   get "exams/select_modules"
